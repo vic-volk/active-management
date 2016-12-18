@@ -10,6 +10,7 @@ public class User {
   @Id
   @GeneratedValue
   private Long id;
+  private String firstname;
   private String lastname;
 
   public Long getId() {
@@ -26,5 +27,13 @@ public class User {
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
   }
 }
