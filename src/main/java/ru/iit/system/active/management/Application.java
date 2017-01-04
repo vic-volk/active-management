@@ -12,6 +12,7 @@ import ru.iit.system.active.management.repository.ProjectRepository;
 import ru.iit.system.active.management.repository.UserRepository;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Application {
 
@@ -43,8 +44,8 @@ public class Application {
 
         Project project = new Project();
         project.setName("Test project");
-        project.setStartDate(new Date());
-        project.setEndDate(new Date());
+        project.setStartDate(new GregorianCalendar(2017, 1, 5).getTime());
+        project.setEndDate(new GregorianCalendar(2017, 1, 15).getTime());
 
         project = applicationContext.getBean(ProjectRepository.class).save(project);
 
