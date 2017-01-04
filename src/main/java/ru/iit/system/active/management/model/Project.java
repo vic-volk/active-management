@@ -1,9 +1,11 @@
 package ru.iit.system.active.management.model;
 
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-public class Equipment {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,11 +14,11 @@ public class Equipment {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "cost")
-    private Double cost;
+    @Column(name = "start_date")
+    private Date startDate;
 
-    @Column(name = "total_count")
-    private Long totalCount;
+    @Column(name = "end_date")
+    private Date endDate;
 
     public Long getId() {
         return id;
@@ -34,19 +36,19 @@ public class Equipment {
         this.name = name;
     }
 
-    public Double getCost() {
-        return cost;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCost(Double cost) {
-        this.cost = cost;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Long getTotalCount() {
-        return totalCount;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setTotalCount(Long totalCount) {
-        this.totalCount = totalCount;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

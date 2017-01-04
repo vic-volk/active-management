@@ -2,16 +2,17 @@ package ru.iit.system.active.management.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String firstname;
-  private String lastname;
+  private String firstName;
+  private String lastName;
 
   public Long getId() {
     return id;
@@ -21,19 +22,19 @@ public class User {
     this.id = id;
   }
 
-  public String getLastname() {
-    return lastname;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
   public String getFirstname() {
-    return firstname;
+    return firstName;
   }
 
   public void setFirstname(String firstname) {
-    this.firstname = firstname;
+    this.firstName = firstname;
   }
 }
