@@ -11,8 +11,7 @@ import ru.iit.system.active.management.repository.EquipmentRepository;
 import ru.iit.system.active.management.repository.ProjectRepository;
 import ru.iit.system.active.management.repository.UserRepository;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class Application {
 
@@ -40,7 +39,6 @@ public class Application {
         equipment2.setTotalCount(2000L);
 
         equipment1 = applicationContext.getBean(EquipmentRepository.class).save(equipment1);
-        equipment2 = applicationContext.getBean(EquipmentRepository.class).save(equipment2);
 
         Project project = new Project();
         project.setName("Test project");
@@ -49,19 +47,45 @@ public class Application {
 
         project = applicationContext.getBean(ProjectRepository.class).save(project);
 
-        EquipmentInProject eq1 = new EquipmentInProject();
-        eq1.setEquipment(equipment1);
-        eq1.setProject(project);
-        eq1.setEquipmentCount(10L);
+        List<EquipmentInProject> equipmentInProjects = new ArrayList<>();
+        for(int i = 0; i < 2; i++) {
+            EquipmentInProject eq = new EquipmentInProject();
+            eq.setEquipment(equipment1);
+            eq.setProject(project);
+            eq.setEquipmentCount(10L);
+            equipmentInProjects.add(eq);
+        }
+        equipmentInProjects = applicationContext.getBean(EquipmentInProjectRepository.class).save(equipmentInProjects);
 
-        EquipmentInProject eq2 = new EquipmentInProject();
-        eq2.setEquipment(equipment2);
-        eq2.setProject(project);
-        eq2.setEquipmentCount(20L);
+        applicationContext.getBean(ApplicationConfig.class).setEquipmentInProjectLocks(equipmentInProjects);
+        Thread t1 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
+        Thread t2 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
+        Thread t3 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
+        Thread t4 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
+        Thread t5 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
+        Thread t6 = new Thread(
+                new WorkerThread(applicationContext.getBean(ApplicationConfig.class),
+                        applicationContext.getBean(EquipmentInProjectRepository.class)));
 
-        eq1 = applicationContext.getBean(EquipmentInProjectRepository.class).save(eq1);
-        eq2 = applicationContext.getBean(EquipmentInProjectRepository.class).save(eq2);
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+        t5.start();
+        t6.start();
 
-        System.out.println("=== The End ===");
+        Thread.currentThread().join();
+
+        System.out.println("Count: " + equipmentInProjects.size());
     }
 }

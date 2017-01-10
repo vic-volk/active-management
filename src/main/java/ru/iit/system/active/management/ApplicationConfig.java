@@ -10,13 +10,20 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.iit.system.active.management.model.EquipmentInProject;
 
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableJpaRepositories
 @EnableTransactionManagement
 class ApplicationConfig {
+
+    private Map<Long, EquipmentInProject> equipmentInProjectLocks;
 
     @Bean
     public DataSource dataSource() {
@@ -41,5 +48,14 @@ class ApplicationConfig {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setPersistenceUnitName(entityManagerFactory().getPersistenceUnitName());
         return txManager;
+    }
+
+    public EquipmentInProject getEquipmentInProjectLock(long id) {
+        return equipmentInProjectLocks.get(id);
+    }
+
+    public void setEquipmentInProjectLocks(List<EquipmentInProject> equipmentInProjectLocks) {
+        this.equipmentInProjectLocks = equipmentInProjectLocks.stream()
+                .collect(Collectors.toMap(EquipmentInProject::getId, Function.identity()));
     }
 }
