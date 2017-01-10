@@ -10,6 +10,7 @@ import ru.iit.system.active.management.repository.EquipmentInProjectRepository;
 import ru.iit.system.active.management.repository.EquipmentRepository;
 import ru.iit.system.active.management.repository.ProjectRepository;
 import ru.iit.system.active.management.repository.UserRepository;
+import ru.iit.system.active.management.service.UserService;
 
 import java.util.*;
 
