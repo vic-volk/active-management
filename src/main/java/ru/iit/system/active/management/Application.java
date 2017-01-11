@@ -49,7 +49,7 @@ public class Application {
         project = applicationContext.getBean(ProjectRepository.class).save(project);
 
         List<EquipmentInProject> equipmentInProjects = new ArrayList<>();
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 3; i++) {
             EquipmentInProject eq = new EquipmentInProject();
             eq.setEquipment(equipment1);
             eq.setProject(project);
