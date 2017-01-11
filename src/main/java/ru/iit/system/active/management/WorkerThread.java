@@ -24,9 +24,8 @@ public class WorkerThread implements Runnable {
                 EquipmentInProject equipmentInProjectLock =
                         applicationConfig.getEquipmentInProjectLock(equipmentInProject.getId());
                 synchronized (equipmentInProjectLock) {
-                    System.out.print("[");
+                    System.out.format("ThreadId - [%s]; Pool id [%s]; ", Thread.currentThread().getId(), randomId);
                     System.out.print("Before some actions... ");
-                    System.out.format("Pool id [%s] ", randomId);
                     Thread.sleep(1000);
                     System.out.print("After some actions...");
                     System.out.println("]");
