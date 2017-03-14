@@ -15,19 +15,22 @@ public class WorkerThread implements Runnable {
     }
 
     public void run() {
-        try {
-            EquipmentInProject equipmentInProject = equipmentInProjectRepository.findOne(1L);
-            EquipmentInProject equipmentInProjectLock =
-                    applicationConfig.getEquipmentInProjectLock(equipmentInProject.getId());
-            synchronized (equipmentInProjectLock) {
-                System.out.print("[");
-                System.out.print("Before some actions... ");
-                Thread.sleep(1000);
-                System.out.print("After some actions...");
-                System.out.println("]");
+        while (true) {
+            try {
+                long randomId = new Random().nextInt(2) + 1;
+                EquipmentInProject equipmentInProject = equipmentInProjectRepository.findOne(randomId);
+                EquipmentInProject equipmentInProjectLock =
+                        applicationConfig.getEquipmentInProjectLock(equipmentInProject.getId());
+                synchronized (equipmentInProjectLock) {
+                    System.out.format("ThreadId - [%s]; Pool id [%s]; ", Thread.currentThread().getId(), randomId);
+                    System.out.print("Before some actions... ");
+                    Thread.sleep(1000);
+                    System.out.print("After some actions...");
+                    System.out.println("]");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
