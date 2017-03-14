@@ -3,8 +3,6 @@ package ru.iit.system.active.management;
 import ru.iit.system.active.management.model.EquipmentInProject;
 import ru.iit.system.active.management.repository.EquipmentInProjectRepository;
 
-import java.util.Random;
-
 public class WorkerThread implements Runnable {
 
     private ApplicationConfig applicationConfig;
